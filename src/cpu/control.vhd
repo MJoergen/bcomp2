@@ -3,9 +3,6 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 -- control.vhd
--- Based on the videos here:
--- https://www.youtube.com/watch?v=9PPrrSyubG0
--- https://www.youtube.com/watch?v=35zLnS3fXeA
 
 -- List of instructions:
 -- =====================
@@ -20,7 +17,8 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 -- 1000  JC   Jump if carry flag set
 -- 1111  HLT  Halt execution
 
--- All instructions take six cycles - three fetch and three execute.
+-- Most instructions take two cycles - one fetch and one execute.
+-- Only ADD and SUB take three cycles.
 
 entity control is
 
@@ -78,8 +76,10 @@ architecture Structural of control is
     -- List of all possible micro-instructions
     ------------------------------------------
 
-    constant NOP : control_type := (others => '0');
+    constant NOP : control_type := (
+            others => '0');
 
+    -- Not a separate micro-op, but should rather be OR'ed to the last micro-op of each instruction.
     constant RESTART : control_type := (
             control_RESTART => '1',
             others => '0');
@@ -162,53 +162,22 @@ architecture Structural of control is
     type micro_op_rom_type is array(0 to 3*16-1) of std_logic_vector(17 downto 0);
 
     constant micro_op_rom : micro_op_rom_type := (
-    -- 0000  NOP
-    FETCH, NOP, NOP,
-
-    -- 0001  LDA [addr]
-    FETCH, MEM_TO_AREG or RESTART, NOP,
-
-    -- 0010  ADD [addr]
-    FETCH, MEM_TO_BREG, ALU_TO_AREG,
-
-    -- 0011  SUB [addr]
-    FETCH, MEM_TO_BREG_SUB, ALU_TO_AREG,
-
-    -- 0100  STA [addr]
-    FETCH, AREG_TO_MEM or RESTART, NOP,
-
-    -- 0101  OUT
-    FETCH, AREG_TO_OUT or RESTART, NOP,
-
-    -- 0110  JMP
-    FETCH, IR_TO_PC or RESTART, NOP,
-
-    -- 0111  LDI
-    FETCH, IR_TO_AREG or RESTART, NOP,
-
-    -- 1000  JC
-    FETCH, IR_TO_PC_CARRY or RESTART, NOP,
-
-    -- 1001  HLT
-    FETCH, HLT or RESTART, NOP,
-
-    -- 1010  HLT
-    FETCH, HLT or RESTART, NOP,
-
-    -- 1011  HLT
-    FETCH, HLT or RESTART, NOP,
-
-    -- 1100  HLT
-    FETCH, HLT or RESTART, NOP,
-
-    -- 1101  HLT
-    FETCH, HLT or RESTART, NOP,
-
-    -- 1110  HLT
-    FETCH, HLT or RESTART, NOP,
-
-    -- 1111  HLT
-    FETCH, HLT or RESTART, NOP);
+        FETCH,  NOP            or RESTART,  NOP,         -- 0000  NOP
+        FETCH,  MEM_TO_AREG    or RESTART,  NOP,         -- 0001  LDA [addr]
+        FETCH,  MEM_TO_BREG,                ALU_TO_AREG, -- 0010  ADD [addr]
+        FETCH,  MEM_TO_BREG_SUB,            ALU_TO_AREG, -- 0011  SUB [addr]
+        FETCH,  AREG_TO_MEM    or RESTART,  NOP,         -- 0100  STA [addr]
+        FETCH,  AREG_TO_OUT    or RESTART,  NOP,         -- 0101  OUT
+        FETCH,  IR_TO_PC       or RESTART,  NOP,         -- 0110  JMP
+        FETCH,  IR_TO_AREG     or RESTART,  NOP,         -- 0111  LDI
+        FETCH,  IR_TO_PC_CARRY or RESTART,  NOP,         -- 1000  JC
+        FETCH,  HLT            or RESTART,  NOP,         -- 1001  HLT
+        FETCH,  HLT            or RESTART,  NOP,         -- 1010  HLT
+        FETCH,  HLT            or RESTART,  NOP,         -- 1011  HLT
+        FETCH,  HLT            or RESTART,  NOP,         -- 1100  HLT
+        FETCH,  HLT            or RESTART,  NOP,         -- 1101  HLT
+        FETCH,  HLT            or RESTART,  NOP,         -- 1110  HLT
+        FETCH,  HLT            or RESTART,  NOP);        -- 1111  HLT
 
 begin
 
