@@ -48,16 +48,17 @@ architecture Structural of control is
     subtype control_type is std_logic_vector(17 downto 0);
 
     -- Data bus
-    constant control_DO_IREG   : integer := 0;  -- Instruction register output enable
-    constant control_DO_AREG   : integer := 1;  -- A register output enable
-    constant control_DO_ALU    : integer := 2;  -- ALU output enable
-    constant control_DI_IREG   : integer := 3;  -- Instruction register load
-    constant control_DI_AREG   : integer := 4;  -- A register load
-    constant control_DI_BREG   : integer := 5;  -- B register load
-    constant control_DI_PCREG  : integer := 6;  -- Program counter load (jump)
-    constant control_DB_ENABLE : integer := 8;  -- Drive the external data bus
+    constant control_DO_IREG   : integer :=  0;  -- Instruction register output enable
+    constant control_DO_AREG   : integer :=  1;  -- A register output enable
+    constant control_DO_ALU    : integer :=  2;  -- ALU output enable
+    constant control_DI_IREG   : integer :=  3;  -- Instruction register load
+    constant control_DI_AREG   : integer :=  4;  -- A register load
+    constant control_DI_BREG   : integer :=  5;  -- B register load
+    constant control_DI_PCREG  : integer :=  6;  -- Program counter load (jump)
+    constant control_DB_ENABLE : integer :=  7;  -- Drive the external data bus
+    constant control_RESTART   : integer :=  8; -- Begin new instruction
     -- Address bus
-    constant control_AO_PC     : integer := 9;  -- Program counter output enable
+    constant control_AO_PC     : integer :=  9;  -- Program counter output enable
     constant control_AO_IREG   : integer := 10; -- Memory address register load
     -- Chip select
     constant control_CS_RAM    : integer := 11; -- Chip select RAM
@@ -67,8 +68,7 @@ architecture Structural of control is
     constant control_CE        : integer := 14; -- Program counter increment
     constant control_SU        : integer := 15; -- ALU subtract
     constant control_HLT       : integer := 16; -- Output register load
-    constant control_MASK      : integer := 7;  -- Mask carry register
-    constant control_RESTART   : integer := 17; -- Begin new instruction
+    constant control_MASK      : integer := 17; -- Mask carry register
 
     signal control       : control_type;
     signal counter       : std_logic_vector(1 downto 0) := "00"; -- Four possible states

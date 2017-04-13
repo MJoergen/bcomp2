@@ -63,7 +63,8 @@ architecture Structural of cpu_module is
     alias  control_DI_AREG   : std_logic is control(4);   -- A register load
     alias  control_DI_BREG   : std_logic is control(5);   -- B register load
     alias  control_DI_PCREG  : std_logic is control(6);   -- Program counter load (jump)
-    alias  control_DB_ENABLE : std_logic is control(8);   -- Drive the external databus.
+    alias  control_DB_ENABLE : std_logic is control(7);   -- Drive the external databus.
+    alias  control_RESTART   : std_logic is control(8);   -- Begin new instruction
     -- Address bus
     alias  control_AO_PC     : std_logic is control(9);   -- Program counter output enable
     alias  control_AO_IREG   : std_logic is control(10);  -- Instruction register output enable
@@ -75,8 +76,7 @@ architecture Structural of cpu_module is
     alias  control_CE        : std_logic is control(14);  -- Program counter increment
     alias  control_SU        : std_logic is control(15);  -- ALU subtract
     alias  control_HLT       : std_logic is control(16);  -- Halt clock
-    alias  control_MASK      : std_logic is control(7);   -- Mask carry register
-    alias  control_RESTART   : std_logic is control(17);  -- Begin new instruction
+    alias  control_MASK      : std_logic is control(17);  -- Mask carry register
 
 begin
 

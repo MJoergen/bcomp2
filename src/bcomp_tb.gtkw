@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.72 (w)1999-2016 BSI
-[*] Thu Apr 13 11:32:41 2017
+[*] Thu Apr 13 11:42:43 2017
 [*]
 [dumpfile] "/home/mike/git/bcomp2/src/bcomp_tb.ghw"
-[dumpfile_mtime] "Thu Apr 13 11:30:12 2017"
-[dumpfile_size] 174287
+[dumpfile_mtime] "Thu Apr 13 11:39:14 2017"
+[dumpfile_size] 175227
 [savefile] "/home/mike/git/bcomp2/src/bcomp_tb.gtkw"
 [timestart] 0
 [size] 1805 1087
 [pos] 20 0
-*-28.974503 360000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-33.974503 14440000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] top.
 [treeopen] top.bcomp_tb.
 [treeopen] top.bcomp_tb.inst_bcomp.
@@ -83,7 +83,7 @@ top.bcomp_tb.pmod[0]
 -group_end
 @1000200
 -Test bench
-@29
+@28
 top.bcomp_tb.inst_bcomp.inst_clock_module.clk_slow
 @c00200
 -Top level
@@ -152,7 +152,7 @@ top.bcomp_tb.inst_bcomp.inst_cpu_module.data_io[0]
 @800022
 #{top.bcomp_tb.inst_bcomp.inst_cpu_module.control[17:0]} top.bcomp_tb.inst_bcomp.inst_cpu_module.control[17] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[16] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[15] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[14] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[13] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[12] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[11] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[10] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[9] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[8] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[7] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[6] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[5] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[4] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[3] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[2] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[1] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[0]
 @28
-+{RESTART} top.bcomp_tb.inst_bcomp.inst_cpu_module.control[17]
++{MASK} top.bcomp_tb.inst_bcomp.inst_cpu_module.control[17]
 +{HLT} top.bcomp_tb.inst_bcomp.inst_cpu_module.control[16]
 +{SU} top.bcomp_tb.inst_bcomp.inst_cpu_module.control[15]
 +{CE} top.bcomp_tb.inst_bcomp.inst_cpu_module.control[14]
@@ -161,9 +161,9 @@ top.bcomp_tb.inst_bcomp.inst_cpu_module.data_io[0]
 +{CS_RAM} top.bcomp_tb.inst_bcomp.inst_cpu_module.control[11]
 +{AO_IREG} top.bcomp_tb.inst_bcomp.inst_cpu_module.control[10]
 +{AO_PC} top.bcomp_tb.inst_bcomp.inst_cpu_module.control[9]
-+{DB_ENABLE} top.bcomp_tb.inst_bcomp.inst_cpu_module.control[8]
-+{DI_PCC} top.bcomp_tb.inst_bcomp.inst_cpu_module.control[7]
-+{DI_PC} top.bcomp_tb.inst_bcomp.inst_cpu_module.control[6]
++{RESTART} top.bcomp_tb.inst_bcomp.inst_cpu_module.control[8]
++{DB_ENABLE} top.bcomp_tb.inst_bcomp.inst_cpu_module.control[7]
++{DI_PCREG} top.bcomp_tb.inst_bcomp.inst_cpu_module.control[6]
 +{DI_BREG} top.bcomp_tb.inst_bcomp.inst_cpu_module.control[5]
 +{DI_AREG} top.bcomp_tb.inst_bcomp.inst_cpu_module.control[4]
 +{DI_IREG} top.bcomp_tb.inst_bcomp.inst_cpu_module.control[3]
