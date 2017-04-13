@@ -5,8 +5,6 @@ use work.ram74ls189_datatypes.all;
 use work.vga_bitmap_pkg.ALL;
 
 -- This is the top level
--- The video in https://www.youtube.com/watch?v=g_1HyxBzjl0 gives a 
--- high level view of the computer.
 
 entity bcomp is
 
@@ -18,24 +16,20 @@ entity bcomp is
              -- Clock
              clk_i     : in  std_logic;  -- 25 MHz
 
-             -- Input switches
+             -- Input switches, buttons, and PMOD's
              sw_i      : in  std_logic_vector (7 downto 0);
-
-             -- Inputs from PMOD's
-             pmod_i    : in  std_logic_vector (15 downto 0);
-
-             -- Input buttons
              btn_i     : in  std_logic_vector (3 downto 0);
+             pmod_i    : in  std_logic_vector (15 downto 0);
 
              -- Output LEDs
              led_o     : out std_logic_vector (7 downto 0);
 
-             -- Output segment display
+             -- Output 7-segment display
              seg_ca_o  : out std_logic_vector (6 downto 0);
              seg_dp_o  : out std_logic;
              seg_an_o  : out std_logic_vector (3 downto 0);
 
-             -- VGA output
+             -- Output to VGA monitor
              vga_hs_o  : out std_logic;
              vga_vs_o  : out std_logic;
              vga_col_o : out std_logic_vector(7 downto 0)
@@ -49,61 +43,46 @@ architecture Structural of bcomp is
     signal clk  : std_logic;
 
     -- Interpretation of input buttons and switches.
-    alias btn_clk        : std_logic is btn_i(0);
-    alias btn_write      : std_logic is btn_i(1);
-    alias btn_reset      : std_logic is btn_i(2);
+    alias btn_clk          : std_logic is btn_i(0); -- Singlestep clock
+    alias btn_write        : std_logic is btn_i(1); -- Used for programming the RAM
+    alias btn_reset        : std_logic is btn_i(2); -- Global reset
 
-    alias sw_clk_free    : std_logic is sw_i(0);
-    alias sw_runmode     : std_logic is sw_i(1);
-
-    alias led_select     : std_logic_vector (2 downto 0) is sw_i(4 downto 2);
-    constant LED_SELECT_RAM  : std_logic_vector (2 downto 0) := "000";
-    constant LED_SELECT_OUT  : std_logic_vector (2 downto 0) := "001";
-    constant LED_SELECT_BUS  : std_logic_vector (2 downto 0) := "010";
-    constant LED_SELECT_ALU  : std_logic_vector (2 downto 0) := "011";
-    constant LED_SELECT_ADDR : std_logic_vector (2 downto 0) := "100";
-    constant LED_SELECT_AREG : std_logic_vector (2 downto 0) := "101";
-    constant LED_SELECT_BREG : std_logic_vector (2 downto 0) := "110";
-    constant LED_SELECT_PC   : std_logic_vector (2 downto 0) := "111";
-
-    alias sw_disp_two_comp : std_logic is sw_i(5); -- Display two's complement
+    alias sw_clk_free      : std_logic is sw_i(0);  -- Clock source
+    alias sw_runmode       : std_logic is sw_i(1);  -- Used for programming the RAM
+    alias led_select       : std_logic_vector (3 downto 0)
+                                       is sw_i(5 downto 2);
+    alias sw_disp_two_comp : std_logic is sw_i(6);  -- Display two's complement
 
     -- Used for programming the RAM.
-    alias pmod_address     : std_logic_vector (3 downto 0) is pmod_i(11 downto 8);
-    alias pmod_data        : std_logic_vector (7 downto 0) is pmod_i( 7 downto 0);
+    alias pmod_address     : std_logic_vector (3 downto 0)
+                                    is pmod_i(11 downto 8);
+    alias pmod_data        : std_logic_vector (7 downto 0)
+                                    is pmod_i( 7 downto 0);
 
-    -- The main data bus
-    -- All the blocks connected to the data bus
-    -- must have an enable_i pin telling the block,
-    -- whether to output data to the bus or not.
-    -- Additionally, all these blocks provide
-    -- access to the data before the output buffer.
-    -- These blocks are: 
-    --   A-register
-    --   B-register
-    --   instruction register
-    --   ALU
-    --   RAM
-    --   Program counter
+    -- Data bus
     signal data     : std_logic_vector (7 downto 0);
 
+    -- Address bus
     signal addr_cpu : std_logic_vector (3 downto 0);
     signal addr_ram : std_logic_vector (3 downto 0);
-    signal out_cs   : std_logic;
-    signal ram_cs   : std_logic;
+
+    -- Chip select
+    signal cs_out   : std_logic;
+    signal cs_ram   : std_logic;
     signal wr       : std_logic;
     signal hlt      : std_logic;
 
-    signal led_array_cpu : std_logic_vector (8*8-1 downto 0);
+    -- Debug output
     signal led_array     : std_logic_vector (VGA_ROWS*8-1 downto 0);
+    signal content_high  : ram_type;
+    signal content_low   : ram_type;
+    signal led_array_cpu : std_logic_vector (8*8-1 downto 0);
     signal ram_value     : std_logic_vector (7 downto 0);
     signal disp_value    : std_logic_vector (7 downto 0);
 
-    signal content_high : ram_type;
-    signal content_low  : ram_type;
-
 begin
 
+    -- This entire array is displayed on the VGA monitor
     led_array <= content_high(15) & content_low(15) & 
                  content_high(14) & content_low(14) & 
                  content_high(13) & content_low(13) & 
@@ -112,8 +91,10 @@ begin
                  "0000" & addr_ram &         -- ADDR
                  ram_value;                  -- RAM
 
+    -- Select a subset to show on the onboard LED's
     led_o <= led_array(conv_integer(led_select)*8+7 downto conv_integer(led_select)*8);
 
+    -- This multiplexer is used when programming the RAM from the external PMOD's.
     addr_ram <= pmod_address when sw_runmode = '0' else addr_cpu;
 
     -- Instantiate Clock module
@@ -136,14 +117,31 @@ begin
                  rst_i       => btn_reset     ,
                  addr_o      => addr_cpu      ,
                  data_io     => data          ,
-                 out_cs_o    => out_cs        ,
-                 ram_cs_o    => ram_cs        ,
+                 cs_out_o    => cs_out        ,
+                 cs_ram_o    => cs_ram        ,
                  wr_o        => wr            ,
                  hlt_o       => hlt           ,
-                 led_array_o => led_array_cpu
+                 led_array_o => led_array_cpu    -- Debug output
              );
 
     -- Instantiate RAM module
+    -- The initial contents correspond to the following program
+    -- 0x00  0x71  LDI 0x01
+    -- 0x01  0x4E  STA [0x0E]  y = 1
+    -- 0x02  0x70  LDI 0x00    x = 0
+    -- 0x03  0x50  OUT
+    -- 0x04  0x2E  ADD [0x0E]
+    -- 0x05  0x4F  STA [0x0F]  z = x+y
+    -- 0x06  0x1E  LDA [0x0E]
+    -- 0x07  0x4D  STA [0x0D]  x = y
+    -- 0x08  0x1F  LDA [0x0F]
+    -- 0x09  0x4E  STA [0x0E]  y = z
+    -- 0x0A  0x1D  LDA [0x0D]
+    -- 0x0B  0x80  JC  0x00
+    -- 0x0C  0x63  JMP 0x03
+    -- 0x0D        x
+    -- 0x0E        y
+    -- 0x0F        z
     inst_ram_module : entity work.ram_module
     generic map (
                     INITIAL_HIGH => (
@@ -156,16 +154,17 @@ begin
     port map (
                  clk_i          => clk          ,
                  wr_i           => wr           ,
-                 enable_i       => ram_cs       ,
+                 enable_i       => cs_ram       ,
                  data_io        => data         ,
                  address_i      => addr_ram     ,
-                 runmode_i      => sw_runmode   ,
-                 sw_data_i      => pmod_data    ,
-                 wr_button_i    => btn_write    ,
+
+                 runmode_i      => sw_runmode   ,  -- Programming mode
+                 sw_data_i      => pmod_data    ,  -- Programming mode
+                 wr_button_i    => btn_write    ,  -- Programming mode
 
                  data_led_o     => ram_value    ,  -- Debug output
-                 content_high_o => content_high ,
-                 content_low_o  => content_low
+                 content_high_o => content_high ,  -- Debug output
+                 content_low_o  => content_low     -- Debug output
              );
 
     -- Instantiate VGA module
@@ -181,15 +180,15 @@ begin
     -- Instantiate Peripheral module
     inst_peripheral_module : entity work.peripheral_module
     port map (
-                 clk_i      => clk_i            , -- 25 MHz crystal clock
+                 clk_i      => clk_i            ,  -- 25 MHz crystal clock
                  rst_i      => btn_reset        ,
                  data_i     => data             ,
-                 cs_i       => out_cs           ,
+                 cs_i       => cs_out           ,
                  mode_i     => sw_disp_two_comp ,
                  seg_ca_o   => seg_ca_o         ,
                  seg_dp_o   => seg_dp_o         ,
                  seg_an_o   => seg_an_o         ,
-                 data_led_o => disp_value
+                 data_led_o => disp_value          -- Debug output
              );
 
 end Structural;

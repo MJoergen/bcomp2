@@ -16,8 +16,8 @@ entity cpu_module is
 
              data_io     : inout std_logic_vector (7 downto 0);
 
-             out_cs_o    : out   std_logic;
-             ram_cs_o    : out   std_logic;
+             cs_out_o    : out   std_logic;
+             cs_ram_o    : out   std_logic;
              wr_o        : out   std_logic;
              hlt_o       : out   std_logic;
 
@@ -94,8 +94,8 @@ begin
 
 
     hlt_o    <= control_HLT;
-    out_cs_o <= control_CS_OUT;
-    ram_cs_o <= control_CS_RAM;
+    cs_out_o <= control_CS_OUT;
+    cs_ram_o <= control_CS_RAM;
     wr_o     <= control_WR;
 
     pc_load <= control_DI_PC or (control_DI_PCC and carry_reg);

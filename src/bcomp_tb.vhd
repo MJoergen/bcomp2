@@ -32,17 +32,23 @@ architecture Structural of bcomp_tb is
     alias sw_clk_free : std_logic is sw(0);
     alias sw_runmode  : std_logic is sw(1);
 
-    alias sw_led_select  : std_logic_vector (2 downto 0) is sw(4 downto 2);
-    constant LED_SELECT_RAM  : std_logic_vector (2 downto 0) := "000";
-    constant LED_SELECT_ADDR : std_logic_vector (2 downto 0) := "001";
-    constant LED_SELECT_OUT  : std_logic_vector (2 downto 0) := "010";
-    constant LED_SELECT_BUS  : std_logic_vector (2 downto 0) := "011";
-    constant LED_SELECT_ALU  : std_logic_vector (2 downto 0) := "100";
-    constant LED_SELECT_AREG : std_logic_vector (2 downto 0) := "101";
-    constant LED_SELECT_BREG : std_logic_vector (2 downto 0) := "110";
-    constant LED_SELECT_PC   : std_logic_vector (2 downto 0) := "111";
+    alias sw_led_select  : std_logic_vector (3 downto 0) is sw(5 downto 2);
+    constant LED_SELECT_RAM  : std_logic_vector (3 downto 0) := "0000";
+    constant LED_SELECT_ADDR : std_logic_vector (3 downto 0) := "0001";
+    constant LED_SELECT_OUT  : std_logic_vector (3 downto 0) := "0010";
+    constant LED_SELECT_BUS  : std_logic_vector (3 downto 0) := "0011";
+    constant LED_SELECT_ALU  : std_logic_vector (3 downto 0) := "0100";
+    constant LED_SELECT_AREG : std_logic_vector (3 downto 0) := "0101";
+    constant LED_SELECT_BREG : std_logic_vector (3 downto 0) := "0110";
+    constant LED_SELECT_PC   : std_logic_vector (3 downto 0) := "0111";
+    constant LED_SELECT_CONL : std_logic_vector (3 downto 0) := "1000";
+    constant LED_SELECT_CONH : std_logic_vector (3 downto 0) := "1001";
+    constant LED_SELECT_IREG : std_logic_vector (3 downto 0) := "1010";
+    constant LED_SELECT_D    : std_logic_vector (3 downto 0) := "1011";
+    constant LED_SELECT_E    : std_logic_vector (3 downto 0) := "1100";
+    constant LED_SELECT_F    : std_logic_vector (3 downto 0) := "1101";
 
-    alias sw_disp_two_comp : std_logic is sw(5); -- Display two's complement
+    alias sw_disp_two_comp : std_logic is sw(6); -- Display two's complement
 
     alias pmod_address  : std_logic_vector (3 downto 0) is pmod(11 downto 8);
     alias pmod_data     : std_logic_vector (7 downto 0) is pmod( 7 downto 0);
