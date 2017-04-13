@@ -5,7 +5,7 @@ https://www.youtube.com/playlist?list=PLowKtXNTBypGqImE405J2565dvjafglHU
 Suggestions and contributions are welcome.
 
 # Optimizations
-A number of optimizations has been implemented. So where the original design
+A number of optimizations have been implemented. So where the original design
 uses six clock cycles for each instruction, the current design uses only
 two clock cycles for most instructions.
 
