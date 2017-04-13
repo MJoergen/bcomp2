@@ -223,8 +223,10 @@ $(project).mcs: $(project).bit
 junk += $(project).mcs $(project).cfi $(project).prm
 
 $(project).bit: $(project)_par.ncd
+	#$(xil_env); \
+	#bitgen $(intstyle) -g DriveDone:yes -g StartupClk:Cclk -w $(project)_par.ncd $(project).bit
 	$(xil_env); \
-	bitgen $(intstyle) -g DriveDone:yes -g StartupClk:Cclk -w $(project)_par.ncd $(project).bit
+	bitgen $(intstyle) -g DriveDone:yes -g StartupClk:JtagClk -w $(project)_par.ncd $(project).bit
 junk += $(project).bgn $(project).bit $(project).drc $(project)_bd.bmm $(project)_bitgen.xwbt
 
 
