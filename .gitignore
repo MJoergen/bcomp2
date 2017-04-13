@@ -1,0 +1,4 @@
+*.o
+bcomp_tb
+bcomp_tb.ghw
+work-obj93.cf

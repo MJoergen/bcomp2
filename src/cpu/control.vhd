@@ -35,7 +35,7 @@ entity control is
              instruct_i : in  std_logic_vector(3 downto 0);
 
              -- The derived clock output
-             control_o  : out std_logic_vector(16 downto 0);
+             control_o  : out std_logic_vector(17 downto 0);
 
              -- Debug output
              counter_o  : out std_logic_vector(1 downto 0)
@@ -45,7 +45,7 @@ end control;
 
 architecture Structural of control is
 
-    subtype control_type is std_logic_vector(16 downto 0);
+    subtype control_type is std_logic_vector(17 downto 0);
 
     -- Data bus
     constant control_DO_IREG   : integer := 0;  -- Instruction register output enable
@@ -54,21 +54,23 @@ architecture Structural of control is
     constant control_DI_IREG   : integer := 3;  -- Instruction register load
     constant control_DI_AREG   : integer := 4;  -- A register load
     constant control_DI_BREG   : integer := 5;  -- B register load
-    constant control_DI_PC     : integer := 6;  -- Program counter jump
-    constant control_DI_PCC    : integer := 7;  -- B register output enable
-    constant control_DB_ENABLE : integer := 8;
+    constant control_DI_PCREG  : integer := 6;  -- Program counter load (jump)
+    constant control_DB_ENABLE : integer := 8;  -- Drive the external data bus
     -- Address bus
     constant control_AO_PC     : integer := 9;  -- Program counter output enable
     constant control_AO_IREG   : integer := 10; -- Memory address register load
     -- Chip select
-    constant control_CS_RAM    : integer := 11; -- RAM output enable
-    constant control_CS_OUT    : integer := 12; -- Output register load
-    constant control_WR        : integer := 13; -- RAM load (write)
+    constant control_CS_RAM    : integer := 11; -- Chip select RAM
+    constant control_CS_OUT    : integer := 12; -- Chip select peripheral
+    constant control_WR        : integer := 13; -- Write enable
     -- Miscellaneous
-    constant control_CE        : integer := 14; -- Program counter count enable
+    constant control_CE        : integer := 14; -- Program counter increment
     constant control_SU        : integer := 15; -- ALU subtract
     constant control_HLT       : integer := 16; -- Output register load
+    constant control_MASK      : integer := 7;  -- Mask carry register
+    constant control_RESTART   : integer := 17; -- Begin new instruction
 
+    signal control       : control_type;
     signal counter       : std_logic_vector(1 downto 0) := "00"; -- Four possible states
     signal micro_op_addr : integer range 0 to 3*16-1;
 
@@ -78,8 +80,12 @@ architecture Structural of control is
 
     constant NOP : control_type := (others => '0');
 
+    constant RESTART : control_type := (
+            control_RESTART => '1',
+            others => '0');
+
     -- Common for all instructions
-    constant MEM_TO_IR : control_type := (
+    constant FETCH : control_type := (
             control_AO_PC   => '1',
             control_CE      => '1',
             control_CS_RAM  => '1',
@@ -99,6 +105,7 @@ architecture Structural of control is
             control_AO_IREG => '1',
             control_DI_BREG => '1',
             others => '0');
+
     constant ALU_TO_AREG : control_type := (
             control_DO_ALU  => '1',
             control_DI_AREG => '1',
@@ -130,8 +137,8 @@ architecture Structural of control is
 
     -- JMP
     constant IR_TO_PC : control_type := (
-            control_DO_IREG => '1',
-            control_DI_PC   => '1',
+            control_DO_IREG  => '1',
+            control_DI_PCREG => '1',
             others => '0');
 
     -- LDI
@@ -142,8 +149,9 @@ architecture Structural of control is
 
     -- JC
     constant IR_TO_PC_CARRY : control_type := (
-            control_DO_IREG => '1',
-            control_DI_PCC  => '1',
+            control_DO_IREG  => '1',
+            control_DI_PCREG => '1',
+            control_MASK     => '1',
             others => '0');
 
     -- HLT
@@ -151,56 +159,56 @@ architecture Structural of control is
             control_HLT => '1',
             others => '0');
 
-    type micro_op_rom_type is array(0 to 3*16-1) of std_logic_vector(16 downto 0);
+    type micro_op_rom_type is array(0 to 3*16-1) of std_logic_vector(17 downto 0);
 
     constant micro_op_rom : micro_op_rom_type := (
     -- 0000  NOP
-    MEM_TO_IR, NOP, NOP,
+    FETCH, NOP, NOP,
 
     -- 0001  LDA [addr]
-    MEM_TO_IR, MEM_TO_AREG, NOP,
+    FETCH, MEM_TO_AREG or RESTART, NOP,
 
     -- 0010  ADD [addr]
-    MEM_TO_IR, MEM_TO_BREG, ALU_TO_AREG,
+    FETCH, MEM_TO_BREG, ALU_TO_AREG,
 
     -- 0011  SUB [addr]
-    MEM_TO_IR, MEM_TO_BREG_SUB, ALU_TO_AREG,
+    FETCH, MEM_TO_BREG_SUB, ALU_TO_AREG,
 
     -- 0100  STA [addr]
-    MEM_TO_IR, AREG_TO_MEM, NOP,
+    FETCH, AREG_TO_MEM or RESTART, NOP,
 
     -- 0101  OUT
-    MEM_TO_IR, AREG_TO_OUT, NOP,
+    FETCH, AREG_TO_OUT or RESTART, NOP,
 
     -- 0110  JMP
-    MEM_TO_IR, IR_TO_PC, NOP,
+    FETCH, IR_TO_PC or RESTART, NOP,
 
     -- 0111  LDI
-    MEM_TO_IR, IR_TO_AREG, NOP,
+    FETCH, IR_TO_AREG or RESTART, NOP,
 
     -- 1000  JC
-    MEM_TO_IR, IR_TO_PC_CARRY, NOP,
+    FETCH, IR_TO_PC_CARRY or RESTART, NOP,
 
     -- 1001  HLT
-    MEM_TO_IR, HLT, NOP,
+    FETCH, HLT or RESTART, NOP,
 
     -- 1010  HLT
-    MEM_TO_IR, HLT, NOP,
+    FETCH, HLT or RESTART, NOP,
 
     -- 1011  HLT
-    MEM_TO_IR, HLT, NOP,
+    FETCH, HLT or RESTART, NOP,
 
     -- 1100  HLT
-    MEM_TO_IR, HLT, NOP,
+    FETCH, HLT or RESTART, NOP,
 
     -- 1101  HLT
-    MEM_TO_IR, HLT, NOP,
+    FETCH, HLT or RESTART, NOP,
 
     -- 1110  HLT
-    MEM_TO_IR, HLT, NOP,
+    FETCH, HLT or RESTART, NOP,
 
     -- 1111  HLT
-    MEM_TO_IR, HLT, NOP);
+    FETCH, HLT or RESTART, NOP);
 
 begin
 
@@ -209,7 +217,7 @@ begin
         if rst_i = '1' then
             counter <= (others => '0');
         elsif rising_edge(clk_i) then
-            if counter = 2 then
+            if (counter = 2) or (control(control_RESTART) = '1') then
                 counter <= "00";
             else
                 counter <= counter + 1;
@@ -218,9 +226,9 @@ begin
     end process;
 
     micro_op_addr <= conv_integer(instruct_i)*3 + conv_integer(counter);
+    control <= micro_op_rom(micro_op_addr);
 
-    control_o <= micro_op_rom(micro_op_addr);
-
+    control_o <= control;
     counter_o <= counter;
 
 end Structural;

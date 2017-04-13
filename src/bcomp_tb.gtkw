@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.72 (w)1999-2016 BSI
-[*] Thu Apr 13 08:39:00 2017
+[*] Thu Apr 13 11:32:41 2017
 [*]
-[dumpfile] "/home/mike/git/bcomp/src/bcomp_tb.ghw"
-[dumpfile_mtime] "Thu Apr 13 08:38:53 2017"
-[dumpfile_size] 226018
-[savefile] "/home/mike/git/bcomp/src/bcomp_tb.gtkw"
+[dumpfile] "/home/mike/git/bcomp2/src/bcomp_tb.ghw"
+[dumpfile_mtime] "Thu Apr 13 11:30:12 2017"
+[dumpfile_size] 174287
+[savefile] "/home/mike/git/bcomp2/src/bcomp_tb.gtkw"
 [timestart] 0
 [size] 1805 1087
 [pos] 20 0
-*-33.490196 10600000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-28.974503 360000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] top.
 [treeopen] top.bcomp_tb.
 [treeopen] top.bcomp_tb.inst_bcomp.
@@ -83,27 +83,23 @@ top.bcomp_tb.pmod[0]
 -group_end
 @1000200
 -Test bench
-@28
+@29
 top.bcomp_tb.inst_bcomp.inst_clock_module.clk_slow
 @c00200
 -Top level
 @22
 #{top.bcomp_tb.inst_bcomp.addr_ram[3:0]} top.bcomp_tb.inst_bcomp.addr_ram[3] top.bcomp_tb.inst_bcomp.addr_ram[2] top.bcomp_tb.inst_bcomp.addr_ram[1] top.bcomp_tb.inst_bcomp.addr_ram[0]
 #{top.bcomp_tb.inst_bcomp.addr_cpu[3:0]} top.bcomp_tb.inst_bcomp.addr_cpu[3] top.bcomp_tb.inst_bcomp.addr_cpu[2] top.bcomp_tb.inst_bcomp.addr_cpu[1] top.bcomp_tb.inst_bcomp.addr_cpu[0]
-@28
-top.bcomp_tb.inst_bcomp.out_cs
-top.bcomp_tb.inst_bcomp.ram_cs
-@22
 #{top.bcomp_tb.inst_bcomp.data[7:0]} top.bcomp_tb.inst_bcomp.data[7] top.bcomp_tb.inst_bcomp.data[6] top.bcomp_tb.inst_bcomp.data[5] top.bcomp_tb.inst_bcomp.data[4] top.bcomp_tb.inst_bcomp.data[3] top.bcomp_tb.inst_bcomp.data[2] top.bcomp_tb.inst_bcomp.data[1] top.bcomp_tb.inst_bcomp.data[0]
 @1401200
 -Top level
-@800201
+@800200
 -Peripheral module
-@23
+@22
 #{top.bcomp_tb.inst_bcomp.disp_value[7:0]} top.bcomp_tb.inst_bcomp.disp_value[7] top.bcomp_tb.inst_bcomp.disp_value[6] top.bcomp_tb.inst_bcomp.disp_value[5] top.bcomp_tb.inst_bcomp.disp_value[4] top.bcomp_tb.inst_bcomp.disp_value[3] top.bcomp_tb.inst_bcomp.disp_value[2] top.bcomp_tb.inst_bcomp.disp_value[1] top.bcomp_tb.inst_bcomp.disp_value[0]
-@29
+@28
 top.bcomp_tb.inst_bcomp.inst_peripheral_module.cs_i
-@1000201
+@1000200
 -Peripheral module
 @c00200
 -RAM module
@@ -154,8 +150,9 @@ top.bcomp_tb.inst_bcomp.inst_cpu_module.data_io[0]
 @28
 #{top.bcomp_tb.inst_bcomp.inst_cpu_module.counter[2:0]} top.bcomp_tb.inst_bcomp.inst_cpu_module.counter[1] top.bcomp_tb.inst_bcomp.inst_cpu_module.counter[0]
 @800022
-#{top.bcomp_tb.inst_bcomp.inst_cpu_module.control[16:0]} top.bcomp_tb.inst_bcomp.inst_cpu_module.control[16] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[15] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[14] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[13] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[12] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[11] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[10] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[9] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[8] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[7] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[6] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[5] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[4] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[3] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[2] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[1] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[0]
+#{top.bcomp_tb.inst_bcomp.inst_cpu_module.control[17:0]} top.bcomp_tb.inst_bcomp.inst_cpu_module.control[17] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[16] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[15] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[14] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[13] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[12] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[11] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[10] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[9] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[8] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[7] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[6] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[5] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[4] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[3] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[2] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[1] top.bcomp_tb.inst_bcomp.inst_cpu_module.control[0]
 @28
++{RESTART} top.bcomp_tb.inst_bcomp.inst_cpu_module.control[17]
 +{HLT} top.bcomp_tb.inst_bcomp.inst_cpu_module.control[16]
 +{SU} top.bcomp_tb.inst_bcomp.inst_cpu_module.control[15]
 +{CE} top.bcomp_tb.inst_bcomp.inst_cpu_module.control[14]

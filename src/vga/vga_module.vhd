@@ -43,7 +43,7 @@ begin
                         "@@@@ALU",
                         "@@@AREG",
                         "@@@BREG",
-                        "@@@@@PC",
+                        "@@PCREG",
                         "@@@CONL",
                         "@@@CONH",
                         "@@@IREG",

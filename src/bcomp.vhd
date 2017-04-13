@@ -5,6 +5,7 @@ use work.ram74ls189_datatypes.all;
 use work.vga_bitmap_pkg.ALL;
 
 -- This is the top level
+-- See diagram here: https://github.com/MJoergen/bcomp2/blob/master/img/Block_diagram_new.png
 
 entity bcomp is
 
@@ -83,13 +84,13 @@ architecture Structural of bcomp is
 begin
 
     -- This entire array is displayed on the VGA monitor
-    led_array <= content_high(15) & content_low(15) & 
-                 content_high(14) & content_low(14) & 
-                 content_high(13) & content_low(13) & 
-                 led_array_cpu &
-                 disp_value &                -- OUT
-                 "0000" & addr_ram &         -- ADDR
-                 ram_value;                  -- RAM
+    led_array <= content_high(15) & content_low(15) &   -- VGA name: F
+                 content_high(14) & content_low(14) &   -- VGA name: E
+                 content_high(13) & content_low(13) &   -- VGA name: D
+                 led_array_cpu &                        
+                 disp_value &                           -- VGA name: OUT
+                 "0000" & addr_ram &                    -- VGA name: ADDR
+                 ram_value;                             -- VGA name: RAM
 
     -- Select a subset to show on the onboard LED's
     led_o <= led_array(conv_integer(led_select)*8+7 downto conv_integer(led_select)*8);
