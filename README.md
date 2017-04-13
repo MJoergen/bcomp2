@@ -10,10 +10,10 @@ uses six clock cycles for each instruction, the current design uses only
 two clock cycles for most instructions.
 
 The overall block diagram of the computer is here:
-![alt text](https://github.com/MJoergen/bcomp/blob/master/img/Block_diagram_new.png "")
+![alt text](https://github.com/MJoergen/bcomp2/blob/master/img/Block_diagram_new.png "")
 
 The CPU model block diagram is here:
-![alt text](https://github.com/MJoergen/bcomp/blob/master/img/CPU_model.png "")
+![alt text](https://github.com/MJoergen/bcomp2/blob/master/img/CPU_model.png "")
 
 # Implementation
 Everything is implemented in VHDL, taylored for the BASYS2 FPGA board
