@@ -3,6 +3,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 -- cpu_module.vhd
+-- See diagram here: https://github.com/MJoergen/bcomp2/blob/master/img/CPU_model.png
 
 -- There is no separate register on the address bus. Instead, there is 
 -- a simple multiplexer connected to the other modules.
