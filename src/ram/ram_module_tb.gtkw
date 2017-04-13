@@ -1,0 +1,48 @@
+[*]
+[*] GTKWave Analyzer v3.3.78 (w)1999-2016 BSI
+[*] Tue Apr 11 19:27:29 2017
+[*]
+[dumpfile] "/home/mike/git/bcomp/src/ram_module_tb.ghw"
+[dumpfile_mtime] "Tue Apr 11 19:27:23 2017"
+[dumpfile_size] 2337
+[savefile] "/home/mike/git/bcomp/src/ram_module_tb.gtkw"
+[timestart] 0
+[size] 1000 600
+[pos] -1 -1
+*-27.945896 80000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] top.
+[treeopen] top.ram_module_tb.
+[treeopen] top.ram_module_tb.inst_ram_module.
+[sst_width] 229
+[signals_width] 190
+[sst_expanded] 1
+[sst_vpaned_height] 146
+@28
+top.ram_module_tb.clk
+top.ram_module_tb.wr
+top.ram_module_tb.enable
+@22
+#{top.ram_module_tb.data[7:0]} top.ram_module_tb.data[7] top.ram_module_tb.data[6] top.ram_module_tb.data[5] top.ram_module_tb.data[4] top.ram_module_tb.data[3] top.ram_module_tb.data[2] top.ram_module_tb.data[1] top.ram_module_tb.data[0]
+@28
+top.ram_module_tb.runmode
+@22
+#{top.ram_module_tb.sw_data[7:0]} top.ram_module_tb.sw_data[7] top.ram_module_tb.sw_data[6] top.ram_module_tb.sw_data[5] top.ram_module_tb.sw_data[4] top.ram_module_tb.sw_data[3] top.ram_module_tb.sw_data[2] top.ram_module_tb.sw_data[1] top.ram_module_tb.sw_data[0]
+@28
+top.ram_module_tb.wr_button
+@22
+#{top.ram_module_tb.data_led[7:0]} top.ram_module_tb.data_led[7] top.ram_module_tb.data_led[6] top.ram_module_tb.data_led[5] top.ram_module_tb.data_led[4] top.ram_module_tb.data_led[3] top.ram_module_tb.data_led[2] top.ram_module_tb.data_led[1] top.ram_module_tb.data_led[0]
+@200
+-RAM
+@28
+top.ram_module_tb.inst_ram_module.runmode_i
+top.ram_module_tb.inst_ram_module.wr_i
+top.ram_module_tb.inst_ram_module.wr_button_i
+top.ram_module_tb.inst_ram_module.enable_i
+@22
+#{top.ram_module_tb.inst_ram_module.address_i[3:0]} top.ram_module_tb.inst_ram_module.address_i[3] top.ram_module_tb.inst_ram_module.address_i[2] top.ram_module_tb.inst_ram_module.address_i[1] top.ram_module_tb.inst_ram_module.address_i[0]
+#{top.ram_module_tb.inst_ram_module.sw_data_i[7:0]} top.ram_module_tb.inst_ram_module.sw_data_i[7] top.ram_module_tb.inst_ram_module.sw_data_i[6] top.ram_module_tb.inst_ram_module.sw_data_i[5] top.ram_module_tb.inst_ram_module.sw_data_i[4] top.ram_module_tb.inst_ram_module.sw_data_i[3] top.ram_module_tb.inst_ram_module.sw_data_i[2] top.ram_module_tb.inst_ram_module.sw_data_i[1] top.ram_module_tb.inst_ram_module.sw_data_i[0]
+#{top.ram_module_tb.inst_ram_module.data_in[7:0]} top.ram_module_tb.inst_ram_module.data_in[7] top.ram_module_tb.inst_ram_module.data_in[6] top.ram_module_tb.inst_ram_module.data_in[5] top.ram_module_tb.inst_ram_module.data_in[4] top.ram_module_tb.inst_ram_module.data_in[3] top.ram_module_tb.inst_ram_module.data_in[2] top.ram_module_tb.inst_ram_module.data_in[1] top.ram_module_tb.inst_ram_module.data_in[0]
+#{top.ram_module_tb.inst_ram_module.data_out[7:0]} top.ram_module_tb.inst_ram_module.data_out[7] top.ram_module_tb.inst_ram_module.data_out[6] top.ram_module_tb.inst_ram_module.data_out[5] top.ram_module_tb.inst_ram_module.data_out[4] top.ram_module_tb.inst_ram_module.data_out[3] top.ram_module_tb.inst_ram_module.data_out[2] top.ram_module_tb.inst_ram_module.data_out[1] top.ram_module_tb.inst_ram_module.data_out[0]
+#{top.ram_module_tb.inst_ram_module.data_io[7:0]} top.ram_module_tb.inst_ram_module.data_io[7] top.ram_module_tb.inst_ram_module.data_io[6] top.ram_module_tb.inst_ram_module.data_io[5] top.ram_module_tb.inst_ram_module.data_io[4] top.ram_module_tb.inst_ram_module.data_io[3] top.ram_module_tb.inst_ram_module.data_io[2] top.ram_module_tb.inst_ram_module.data_io[1] top.ram_module_tb.inst_ram_module.data_io[0]
+[pattern_trace] 1
+[pattern_trace] 0
