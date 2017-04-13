@@ -9,18 +9,18 @@ A number of optimizations has been implemented. So where the original design
 uses six clock cycles for each instruction, the current design uses only
 two clock cycles for most instructions.
 
-The overall block diagram of the computer is here:
-![alt text](https://github.com/MJoergen/bcomp2/blob/master/img/Block_diagram_new.png "")
-
-The CPU model block diagram is here:
-![alt text](https://github.com/MJoergen/bcomp2/blob/master/img/CPU_model.png "")
-
 # Implementation
 Everything is implemented in VHDL, taylored for the BASYS2 FPGA board
 http://store.digilentinc.com/basys-2-spartan-3e-fpga-trainer-board-limited-time-see-basys-3/ , see picture below:
 ![alt text](https://github.com/MJoergen/bcomp/blob/master/img/Basys2.png "")
 
 The FPGA board is based on a Spartan-3E FPGA chip from Xilinx.
+
+The overall block diagram of the computer is here:
+![alt text](https://github.com/MJoergen/bcomp2/blob/master/img/Block_diagram_new.png "")
+
+The CPU model block diagram is here:
+![alt text](https://github.com/MJoergen/bcomp2/blob/master/img/CPU_model.png "")
 
 # Resources
 Here are some links to additional learning resources:
