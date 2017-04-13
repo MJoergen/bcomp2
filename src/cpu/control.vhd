@@ -82,12 +82,12 @@ architecture Structural of control is
     -- Not a separate micro-op, but should rather be OR'ed to the last micro-op of each instruction.
     constant RESTART : control_type := (
             control_RESTART => '1',
+            control_CE      => '1', -- Increment program counter for next instruction.
             others => '0');
 
     -- Common for all instructions
     constant FETCH : control_type := (
             control_AO_PC   => '1',
-            control_CE      => '1',
             control_CS_RAM  => '1',
             control_DI_IREG => '1',
             others => '0');
@@ -164,8 +164,8 @@ architecture Structural of control is
     constant micro_op_rom : micro_op_rom_type := (
         FETCH,  NOP            or RESTART,  NOP,         -- 0000  NOP
         FETCH,  MEM_TO_AREG    or RESTART,  NOP,         -- 0001  LDA [addr]
-        FETCH,  MEM_TO_BREG,                ALU_TO_AREG, -- 0010  ADD [addr]
-        FETCH,  MEM_TO_BREG_SUB,            ALU_TO_AREG, -- 0011  SUB [addr]
+        FETCH,  MEM_TO_BREG,                ALU_TO_AREG or RESTART, -- 0010  ADD [addr]
+        FETCH,  MEM_TO_BREG_SUB,            ALU_TO_AREG or RESTART, -- 0011  SUB [addr]
         FETCH,  AREG_TO_MEM    or RESTART,  NOP,         -- 0100  STA [addr]
         FETCH,  AREG_TO_OUT    or RESTART,  NOP,         -- 0101  OUT
         FETCH,  IR_TO_PC       or RESTART,  NOP,         -- 0110  JMP
