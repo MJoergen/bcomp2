@@ -4,7 +4,8 @@ use IEEE.STD_LOGIC_1164.ALL;
 package vga_bitmap_pkg is
     subtype vga_bitmap_t is std_logic_vector(0 to 255);
 
-    constant VGA_ROWS : integer := 14;
+    constant VGA_ROWS  : integer := 14;
+    constant VGA_CHARS : integer := 7;
 
     constant vga_bitmap_char_0 : vga_bitmap_t := (
         "0000000000000000" &
@@ -559,7 +560,7 @@ package vga_bitmap_pkg is
         vga_bitmap_char_Y,
         vga_bitmap_char_Z);
 
-    type vga_string_t is array (0 to 6) of character; -- Exactly 7 characters.
+    type vga_string_t is array (0 to VGA_CHARS-1) of character; -- Exactly 7 characters.
     type vga_names_t is array (0 to VGA_ROWS-1) of vga_string_t; -- One string for each row.
 
 end package vga_bitmap_pkg;
